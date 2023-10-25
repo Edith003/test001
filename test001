@@ -1,2 +1,116 @@
 jkdkkmd
 vjijdfoju
+
+
+
+
+
+CircleTest.java
+
+package circle;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class CircleTest {
+
+private Circle circle;
+private double radius = 5.0;
+
+@BeforeEach
+public void setup() {
+circle = new Circle(radius);
+}
+
+@Test
+public void testCalculateArea() {
+double expected = 78.53981633974483;
+double actual = Math.PI * circle.radius * circle.radius;
+assertEquals(expected, actual);
+}
+
+@Test
+public void testCalculatePerimeter() {
+double expected = 31.41592653589793;
+double actual = circle.calculatePerimeter();
+assertEquals(expected, actual);
+}
+
+}
+
+Circle.java
+
+package circle;
+
+
+
+
+public class Circle {
+
+
+
+
+double radius;
+
+
+
+
+public Circle(double radius) {
+
+this.radius = radius;
+
+}
+
+/**
+
+*
+
+* @return
+
+*/
+
+public double calculateArea() {
+
+return Math.PI * radius * radius;
+
+}
+
+
+
+
+public double calculatePerimeter() {
+
+return 2 * Math.PI * radius;
+
+}
+
+
+
+
+}
+
+
+selenium
+
+package selenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+
+public class test {
+
+public static void main(String[] args)throws InterruptedException {
+// if not added to the path in system variables then use the following command.
+//System.setProperty("webdriver.chrome.driver",path of executable file Chromedriver.exe")
+System.setProperty("webdriver.chrome.driver","C:/Users/Admin/Desktop/salenimumtools/chromedriver.exe");
+WebDriver driver = new ChromeDriver();
+driver.get("https://form.jotform.com/232760936246057");
+driver.findElement(By.id("first_3")).sendKeys("sankey");
+System.out.println("Selenium Webdriver Script in Chrome browser | Software Testing Material");
+// driver.close();
+}
+}
