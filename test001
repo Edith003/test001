@@ -175,3 +175,28 @@ System.out.println("Selenium Webdriver Script in Chrome browser | Software Testi
 // driver.close();
 }
 }
+
+
+
+package selenium1;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class jotform {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver","<path_to_chromedriver>/chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.jotform.com/build/232981062374054");
+	    driver.findElement(By.name("q3_name[first]")).sendKeys("Sahil");
+	    driver.findElement(By.id("q3_name[last]")).sendKeys("Teli");
+	    driver.findElement(By.id("q5_rollnumber[input_5]")).sendKeys("2102103");
+	    driver.findElement(By.id("q7_address[input_7_addr_line1]")).sendKeys("Sahil");
+	    driver.findElement(By.id("q7_address[city]")).sendKeys("DULER");
+	    driver.findElement(By.id("q7_address[state]")).sendKeys("GOA");
+	    driver.findElement(By.id("q7_address[postal]")).sendKeys("403507");
+	    driver.findElement(By.id("input_2")).click();
+	    driver.close();
+	}
