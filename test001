@@ -200,3 +200,292 @@ public class jotform {
 	    driver.findElement(By.id("input_2")).click();
 	    driver.close();
 	}
+
+
+
+Arduino Code:To make LED keep blinking 
+
+const int LED = 2; 
+void setup() { 
+pinMode(LED, OUTPUT); 
+} 
+void loop() { 
+digitalWrite(LED, HIGH); 
+delay(1000); 
+digitalWrite(LED, LOW); 
+delay(1000); 
+} 
+
+
+Aim: To fade an LED brightness using PWM 
+Arduino Code: 
+int brightness = 0; 
+int fadeAmount = 5; 
+void setup() { 
+pinMode(3, OUTPUT); 
+} 
+void loop() { 
+analogWrite(3, brightness); 
+brightness = brightness + fadeAmount; 
+if (brightness <= 0 || brightness >= 255) { 
+fadeAmount = -fadeAmount; 
+} 
+delay(30); 
+} 
+
+
+Aim: To blink an LED using a push button switch as input 
+Code: 
+int ledPin = 13; 
+int buttonPin = 7; 
+void setup() { 
+pinMode(ledPin, OUTPUT); 
+pinMode(buttonPin, INPUT_PULLUP); 
+}
+void loop() { 
+if(digitalRead(buttonPin) == LOW) { 
+digitalWrite(ledPin, HIGH); 
+delay(200); // debounce delay 
+digitalWrite(ledPin, LOW); 
+} 
+} 
+
+
+Aim: To fade an LED based on an analog input from a potentiometer 
+
+Code: 
+int potPin = A0;
+int ledPin = 3; 
+void setup() { 
+pinMode(ledPin, OUTPUT); 
+} 
+void loop() { 
+int potValue = analogRead(potPin); 
+int brightness = map(potValue, 0, 1023, 0, 255); 
+analogWrite(ledPin, brightness); 
+} 
+
+
+
+Aim: To measure distance using an ultrasonic sensor and Arduino 
+Code: 
+const int trigPin = 7; 
+const int echoPin = 6; 
+void setup() { 
+Serial.begin(9600); 
+pinMode(trigPin, OUTPUT); 
+pinMode(echoPin, INPUT); 
+} 
+void loop() { 
+long duration, distance; 
+digitalWrite(trigPin, LOW); 
+delayMicroseconds(2); 
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10); 
+digitalWrite(trigPin, LOW); 
+duration = pulseIn(echoPin, HIGH); 
+distance = (duration/2) / 29.1; 
+Serial.print(distance); 
+Serial.println(" cm"); 
+delay(100); 
+} 
+
+
+
+Aim: To generate musical melodies using a piezo buzzer and Arduino 
+Code: 
+#define C4 262 
+#define D4 294 
+#define E4 330 
+#define G4 392 
+#define A4 440 
+void setup() 
+{
+pinMode(8, OUTPUT); 
+} 
+void loop() 
+{ 
+// Notes in the melody: 
+int melody[] = { A4, G4, E4, G4, A4, G4, E4, G4, C4}; 
+// Note durations: 4 = quarter note, 8 = eighth note, etc.: int noteDurations[] = {4,4,4,4,4,4,4,4,2}; 
+for (int i = 0; i < 9; i++) { 
+int noteDuration = 1000/noteDurations[i]; 
+tone(8, melody[i],noteDuration); 
+int pauseBetweenNotes = noteDuration * 1.30; 
+delay(pauseBetweenNotes); 
+noTone(8); 
+} 
+} 
+
+
+
+
+Title: Adjusting LED using LDR Sensor  
+Aim: To automatically adjust LED brightness based on ambient light levels sensed by an LDR. Apparatus: Arduino Uno, LED, 220 ohm resistor, LDR, 10K ohm resistor, breadboard, jumper wiresCode: 
+const int ldrPin = A0;  
+const int ledPin = 3; 
+void setup() { 
+ Serial.begin(9600); 
+ pinMode(ledPin, OUTPUT); 
+} 
+void loop() { 
+ int ldrStatus = analogRead(ldrPin); 
+ Serial.print("LDR value: "); 
+ Serial.println(ldrStatus); 
+  
+ int brightness = map(ldrStatus, 0, 1023, 255, 0);  
+ analogWrite(ledPin, brightness); 
+ delay(100); 
+} 
+
+
+
+Aim: To automatically adjust LED brightness based on ambient light levels sensed by an LDR. Apparatus: Arduino Uno, LED, 220 ohm resistor, LDR, 10K ohm resistor, breadboard, jumper wires.
+Code: 
+const int ldrPin = A0;  
+const int ledPin = 3; 
+void setup() { 
+ Serial.begin(9600); 
+ pinMode(ledPin, OUTPUT); 
+} 
+void loop() { 
+ int ldrStatus = analogRead(ldrPin); 
+ Serial.print("LDR value: "); 
+ Serial.println(ldrStatus); 
+  
+ int brightness = map(ldrStatus, 0, 1023, 255, 0);  
+ analogWrite(ledPin, brightness); 
+ delay(100); 
+} 
+
+
+
+Title: Interfacing Temperature Sensor 
+Aim: To interface a temperature sensor with Arduino and display the temperature  value on serial monitor. 
+Arduino Code: 
+const int tempSensor = A0; //LM35 connected to analog pin A0 
+void setup() { 
+Serial.begin(9600); //Initialize serial port 
+} 
+void loop() { 
+int sensorVoltage = analogRead(tempSensor); //Read analog voltage //Convert the analog voltage to temperature in degree Celsius
+float tempC = (sensorVoltage/1024.0) * 5 * 100 ; 
+//Print temperature value on serial monitor 
+Serial.print("Temperature: "); 
+Serial.print(tempC); 
+Serial.println("°C"); 
+delay(1000); //1 sec delay 
+} 
+
+
+Traffic Light semulation 
+Aim: To create a traffic light controller that cycles through green, yellow  and red LEDs.  
+Code:  
+// Pin definiƟons 
+const int redLed = 9;  
+const int yellowLed = 10;  const int greenLed = 11;  
+void setup() {  
+ // Set LED pins as Outputs   pinMode(redLed, OUTPUT);   pinMode(yellowLed, OUTPUT);   pinMode(greenLed, OUTPUT);  }  
+void loop() {  
+ // Green light  
+ digitalWrite(greenLed, HIGH);   delay(5000); // Wait 5 seconds    
+ // Yellow light  
+ digitalWrite(greenLed, LOW);   digitalWrite(yellowLed, HIGH);   delay(2000); // Wait 2 seconds 
+ // Red light  
+ digitalWrite(yellowLed, LOW);  
+ digitalWrite(redLed, HIGH);  
+ delay(5000); // Wait 5 seconds  
+ digitalWrite(redLed, LOW);    
+ digitalWrite(greenLed, HIGH);  // Back to green 
+ delay(5000); // Wait 5 seconds  
+}  
+
+
+
+ Blink LED ON/OFF using Clap Sound  (Sound Sensor)  
+Aim: To blink an LED on and off in response to detected clap sounds using  a sound sensor module.  
+Code:  
+const int ledPin = 13; // LED connected to digital pin 13  
+const int soundSensor = A0; // Sound sensor connected to  analog pin A0  
+void setup() {  
+ pinMode(ledPin, OUTPUT); // Set LED as output  }  
+void loop() {  
+ int soundState = digitalRead(soundSensor); // Read sound  sensor  
+ if (soundState == 1) { // If clap detected  
+ digitalWrite(ledPin, !digitalRead(ledPin)); // Toggle LED   }  
+ delay(10); // Delay  
+}  
+
+
+Seven segment display(cathod)  
+Aim: To print numbers from 0 to 9 on a single seven segment display. 
+Code:  
+int  
+Digit[10]={B01111111,B00001101,B10110111,B10011111,B11001101,B11011011,B11111011,B0000 1111,B11111111,B11011111}; // commmon cathode  
+void setup() {  
+ DDRD = B11111110;  
+}  
+void loop() {  
+ for(int i=0;i<10;i++)  
+ {  
+ PORTD = digit[i];  
+ delay(1000);  
+ }  
+}  
+
+
+
+
+Seven segment display  
+Aim: To print numbers from 0 to 9 on a single seven segment display. 
+Code: int a = 2;  
+int b = 3;  
+int c = 4;  
+int d = 5;  
+int e = 6;  
+int f = 7;  
+int g = 8;  
+void setup() {  
+ pinMode(a, OUTPUT);   pinMode(b, OUTPUT);   pinMode(c, OUTPUT);   pinMode(d, OUTPUT);   pinMode(e, OUTPUT);   pinMode(f, OUTPUT);   pinMode(g, OUTPUT);  }  
+void loop() {  
+ // G  
+ digitalWrite(a, HIGH); 
+ digitalWrite(b, LOW);   digitalWrite(c, LOW);   digitalWrite(d, HIGH);   digitalWrite(e, HIGH);   digitalWrite(f, HIGH);   digitalWrite(g, HIGH);   delay(1000);  
+ // O  
+ digitalWrite(a, LOW);   digitalWrite(b, LOW);   digitalWrite(c, HIGH);   digitalWrite(d, LOW);   digitalWrite(e, LOW);   digitalWrite(f, HIGH);   digitalWrite(g, LOW);   delay(1000);  
+ // O  
+ digitalWrite(a, LOW);   digitalWrite(b, LOW);   digitalWrite(c, HIGH); 
+ digitalWrite(d, LOW);   digitalWrite(e, LOW);   digitalWrite(f, HIGH);   digitalWrite(g, LOW);   delay(1000);  
+  
+ // D  
+ digitalWrite(a, HIGH);   digitalWrite(b, LOW);   digitalWrite(c, LOW);   digitalWrite(d, HIGH);  
+ digitalWrite(e, HIGH);   digitalWrite(f, LOW);   digitalWrite(g, LOW);   delay(1000);  
+ // M  
+ digitalWrite(a, LOW);   digitalWrite(b, HIGH);   digitalWrite(c, HIGH);   digitalWrite(d, LOW);   digitalWrite(e, HIGH); 
+ digitalWrite(f, LOW);   digitalWrite(g, LOW);   delay(1000);  
+  
+ // O  
+ digitalWrite(a, LOW);   digitalWrite(b, LOW);   digitalWrite(c, HIGH);   digitalWrite(d, LOW);   digitalWrite(e, LOW);   digitalWrite(f, HIGH);   digitalWrite(g, LOW);   delay(1000);  
+ // R  
+ digitalWrite(a, HIGH);   digitalWrite(b, LOW);   digitalWrite(c, LOW);   digitalWrite(d, HIGH);  
+ digitalWrite(e, HIGH);   digitalWrite(f, LOW);   digitalWrite(g, LOW); 
+ delay(1000);  
+ // N  
+ digitalWrite(a, HIGH);   digitalWrite(b, LOW);   digitalWrite(c, LOW);   digitalWrite(d, LOW);   digitalWrite(e, HIGH);   digitalWrite(f, LOW);  
+ digitalWrite(g, LOW);   delay(1000);  
+ // I  
+ digitalWrite(a, LOW);   digitalWrite(b, LOW);   digitalWrite(c, HIGH);   digitalWrite(d, HIGH);   digitalWrite(e, HIGH);   digitalWrite(f, HIGH);   digitalWrite(g, HIGH);   delay(1000); 
+ // N  
+ digitalWrite(a, HIGH);   digitalWrite(b, LOW);   digitalWrite(c, LOW);   digitalWrite(d, LOW);   digitalWrite(e, HIGH);   digitalWrite(f, LOW);  
+ digitalWrite(g, LOW);   delay(1000);  
+ // G  
+ digitalWrite(a, HIGH);   digitalWrite(b, LOW);   digitalWrite(c, LOW);   digitalWrite(d, HIGH);  
+ digitalWrite(e, HIGH);   digitalWrite(f, HIGH);   digitalWrite(g, HIGH);   delay(1000);  
+} 
+
+
+
+
+
+
+
